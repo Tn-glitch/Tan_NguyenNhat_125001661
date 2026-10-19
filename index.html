@@ -1,0 +1,2953 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VYBE - Nghe Nhạc Trực Tuyến Đẳng Cấp</title>
+  <meta name="description"
+    content="VYBE - Ứng dụng nghe nhạc trực tuyến cao cấp phong cách Spotify và Apple Music với âm thanh chất lượng cao, lời bài hát, đăng nhập tài khoản và kho bài hát thịnh hành.">
+
+  <!-- Google Fonts (Outfit & Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+  <!-- VYBE Stylesheet (Pure HTML & CSS) -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+  <!-- ==================== HIỆU ỨNG ANIMATION KHI LOAD TRANG WEB (PURE CSS PRELOADER) ==================== -->
+  <div class="page-preloader" aria-hidden="true">
+    <div class="preloader-backdrop-glow"></div>
+    <div class="preloader-soundwaves">
+      <div class="wave-circle wave-1"></div>
+      <div class="wave-circle wave-2"></div>
+      <div class="wave-circle wave-3"></div>
+    </div>
+    <div class="preloader-content">
+      <div class="preloader-logo-ring">
+        <div class="preloader-spinner"></div>
+        <div class="preloader-spinner-outer"></div>
+        <div class="preloader-logo-icon">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+      </div>
+      <div class="preloader-brand">
+        <span class="preloader-badge"><i class="fa-solid fa-headphones"></i> HI-RES AUDIO 24-BIT / 96KHZ</span>
+        <span class="preloader-title">VYBE</span>
+        <span class="preloader-tagline">SPOTIFY × APPLE MUSIC LUXURY EXPERIENCE</span>
+      </div>
+      <div class="preloader-bars">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="preloader-progress-track">
+        <div class="preloader-progress-bar"></div>
+      </div>
+      <p class="preloader-status"><i class="fa-solid fa-circle-notch fa-spin"></i> Đang tải không gian âm nhạc Neon & Âm
+        thanh vòm Dolby Atmos...</p>
+    </div>
+  </div>
+
+  <!-- ==================== CÁC INPUT ĐIỀU KHIỂN GIAO DIỆN BẰNG PURE CSS ==================== -->
+  <!-- Điều hướng View (SPA Radio) -->
+  <input type="radio" name="view-tab" id="tab-home" class="view-radio" checked>
+  <input type="radio" name="view-tab" id="tab-search" class="view-radio">
+  <input type="radio" name="view-tab" id="tab-library" class="view-radio">
+  <input type="radio" name="view-tab" id="tab-favorites" class="view-radio">
+  <input type="radio" name="view-tab" id="tab-history" class="view-radio">
+  <input type="radio" name="view-tab" id="tab-profile" class="view-radio">
+  <input type="radio" name="view-tab" id="tab-detail-album" class="view-radio">
+  <input type="radio" name="view-tab" id="tab-detail-playlist" class="view-radio">
+
+  <!-- Điều khiển Thể loại (Genre Filter Radio) -->
+  <input type="radio" name="genre-filter" id="genre-all" class="genre-radio" checked>
+  <input type="radio" name="genre-filter" id="genre-synth" class="genre-radio">
+  <input type="radio" name="genre-filter" id="genre-lofi" class="genre-radio">
+  <input type="radio" name="genre-filter" id="genre-electronic" class="genre-radio">
+  <input type="radio" name="genre-filter" id="genre-acoustic" class="genre-radio">
+  <input type="radio" name="genre-filter" id="genre-classical" class="genre-radio">
+
+  <!-- Điều khiển Đăng nhập / Đăng ký Modal -->
+  <input type="checkbox" id="modal-auth-toggle" class="overlay-checkbox">
+
+  <!-- Điều khiển Bật/Tắt Lời bài hát, Queue, Modal Tạo Playlist và Menu Mobile -->
+  <input type="checkbox" id="toggle-mobile-menu" class="overlay-checkbox">
+  <input type="checkbox" id="toggle-lyrics" class="overlay-checkbox">
+  <input type="checkbox" id="toggle-queue" class="overlay-checkbox">
+  <input type="checkbox" id="modal-create-playlist-toggle" class="overlay-checkbox">
+
+  <!-- Điều khiển Shuffle & Repeat của Player -->
+  <input type="checkbox" id="toggle-shuffle" class="btn-toggle-checkbox">
+  <input type="checkbox" id="toggle-repeat" class="btn-toggle-checkbox" checked>
+
+  <!-- Yêu thích cho từng bài hát (Like Checkboxes) -->
+  <input type="checkbox" id="like-hero" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-1" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-2" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-3" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-4" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-5" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-6" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-7" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-8" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-9" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-10" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-11" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-12" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-13" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-14" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-15" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-16" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-17" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-18" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-19" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-20" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-21" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-22" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-23" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-24" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-25" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-26" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-27" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-28" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-29" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-30" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-31" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-32" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-33" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-34" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-35" class="heart-checkbox" checked>
+  <input type="checkbox" id="like-trk-36" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-37" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-38" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-39" class="heart-checkbox">
+  <input type="checkbox" id="like-trk-40" class="heart-checkbox">
+
+  <!-- ==================== HỆ THỐNG BACKGROUND CHỦ ĐỀ VYBE (NEON AURORA & CYBER MESH) ==================== -->
+  <div class="theme-background-layer" aria-hidden="true">
+    <div class="ambient-glow ambient-glow-1"></div>
+    <div class="ambient-glow ambient-glow-2"></div>
+    <div class="ambient-glow ambient-glow-3"></div>
+    <div class="ambient-glow ambient-glow-4"></div>
+    <div class="theme-grid-overlay"></div>
+    <div class="theme-noise-texture"></div>
+  </div>
+
+  <!-- Khung ứng dụng chính -->
+  <div class="app-container">
+
+    <!-- ==================== SIDEBAR ĐIỀU HƯỚNG BÊN TRÁI (MENU CÔNG CỤ) ==================== -->
+    <nav class="sidebar" aria-label="Thanh điều hướng chính">
+      <div class="sidebar-header-row">
+        <label for="tab-home" class="sidebar-logo" title="Trang chủ VYBE">
+          <div class="logo-icon-wrapper">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <span class="logo-text">VYBE</span>
+        </label>
+        <!-- Nút dấu X để tắt menu công cụ -->
+        <label for="toggle-mobile-menu" class="btn-close-menu" title="Tắt menu công cụ">
+          <i class="fa-solid fa-xmark"></i>
+        </label>
+      </div>
+
+      <!-- Menu Tabs -->
+      <div class="sidebar-nav">
+        <label for="tab-home" class="nav-item">
+          <i class="fa-solid fa-house"></i>
+          <span>Khám phá</span>
+        </label>
+        <label for="tab-search" class="nav-item">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>Tìm kiếm</span>
+        </label>
+        <label for="tab-library" class="nav-item">
+          <i class="fa-solid fa-lines-leaning"></i>
+          <span>Thư viện của bạn</span>
+        </label>
+        <label for="tab-favorites" class="nav-item">
+          <i class="fa-solid fa-heart"></i>
+          <span>Bài hát yêu thích</span>
+        </label>
+        <label for="tab-history" class="nav-item">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>Lịch sử nghe</span>
+        </label>
+        <label for="tab-profile" class="nav-item">
+          <i class="fa-solid fa-circle-user"></i>
+          <span>Tài khoản VIP</span>
+        </label>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <!-- Playlists của bạn -->
+      <div class="sidebar-library-header">
+        <span>Playlists của bạn</span>
+        <label for="modal-create-playlist-toggle" class="btn-add-playlist" title="Tạo playlist mới">
+          <i class="fa-solid fa-plus"></i>
+        </label>
+      </div>
+
+      <div class="playlists-scroll-list">
+        <label for="tab-detail-playlist" class="playlist-nav-item">
+          <i class="fa-solid fa-music"></i>
+          <span>Giai điệu yêu thích</span>
+        </label>
+        <label for="tab-detail-playlist" class="playlist-nav-item">
+          <i class="fa-solid fa-fire"></i>
+          <span>Global Top Hits 2026</span>
+        </label>
+        <label for="tab-detail-playlist" class="playlist-nav-item">
+          <i class="fa-solid fa-compact-disc"></i>
+          <span>V-Pop Thịnh Hành</span>
+        </label>
+        <label for="tab-detail-playlist" class="playlist-nav-item">
+          <i class="fa-solid fa-moon"></i>
+          <span>Deep Focus & Lo-Fi Beats</span>
+        </label>
+        <label for="tab-detail-playlist" class="playlist-nav-item">
+          <i class="fa-solid fa-headphones"></i>
+          <span>Midnight Purple Drive</span>
+        </label>
+      </div>
+    </nav>
+    <!-- Lớp nền mờ click ngoài để tắt menu công cụ -->
+    <label for="toggle-mobile-menu" class="mobile-menu-backdrop" title="Tắt menu công cụ"></label>
+
+    <!-- ==================== KHU VỰC NỘI DUNG CHÍNH (MAIN CONTENT) ==================== -->
+    <main class="main-content">
+
+      <!-- Header trên cùng -->
+      <header class="main-header">
+        <div class="header-left">
+          <label for="toggle-mobile-menu" class="mobile-menu-btn" title="Mở / Tắt menu công cụ">
+            <i class="fa-solid fa-bars"></i>
+          </label>
+
+          <div class="search-bar-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Tìm kiếm bài hát nổi tiếng, ca sĩ, album yêu thích...">
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Nút Đăng nhập mở Modal -->
+          <label for="modal-auth-toggle" class="btn-hero-secondary"
+            style="padding: 8px 16px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-arrow-right-to-bracket" style="color: var(--primary-bright);"></i>
+            <span>Đăng nhập</span>
+          </label>
+
+          <!-- Nút Tài khoản Profile -->
+          <label for="tab-profile" class="user-badge" style="cursor: pointer;" title="Xem thông tin tài khoản">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80"
+              alt="Avatar" class="user-avatar">
+            <span class="user-name">Vybe VIP</span>
+          </label>
+        </div>
+      </header>
+
+      <!-- Vùng cuộn chứa các View -->
+      <div class="views-scroll-container">
+
+        <!-- ==================== VIEW 1: TRANG CHỦ (EXPLORE / HOME) ==================== -->
+        <section class="view-section" id="view-home">
+
+          <!-- Hero Banner nổi bật: Bài hát Siêu Hit -->
+          <div class="hero-banner">
+            <div class="hero-banner-backdrop"
+              style="background-image: url('https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80');">
+            </div>
+            <div class="hero-content">
+              <span class="hero-tag">
+                <i class="fa-solid fa-fire"></i>
+                Global Superhit of 2026
+              </span>
+              <h1 class="hero-title">Blinding Lights (After Hours)</h1>
+              <p class="hero-subtitle">
+                <span><i class="fa-solid fa-user-astronaut"></i> The Weeknd Tribute</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-compact-disc"></i> Synthwave Anthology</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-headphones"></i> 3.8 Tỷ lượt nghe</span>
+              </p>
+
+              <!-- Real HTML5 Audio Player trong Hero Banner -->
+              <div class="hero-audio-wrapper">
+                <audio controls preload="metadata">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                  Trình duyệt không hỗ trợ phát âm thanh HTML5.
+                </audio>
+              </div>
+            </div>
+
+            <div class="hero-visual-side">
+              <div class="hero-art-card">
+                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+                  alt="Hero Art" class="hero-art-img">
+              </div>
+            </div>
+          </div>
+
+          <!-- Bộ lọc thể loại (Genre Pills - Pure CSS) -->
+          <div class="genre-pills-row">
+            <label for="genre-all" class="genre-pill"><i class="fa-solid fa-compass"></i> Tất cả</label>
+            <label for="genre-synth" class="genre-pill"><i class="fa-solid fa-bolt"></i> Synthwave</label>
+            <label for="genre-lofi" class="genre-pill"><i class="fa-solid fa-cloud-moon"></i> Lo-Fi Chill</label>
+            <label for="genre-electronic" class="genre-pill"><i class="fa-solid fa-wave-square"></i> Electronic</label>
+            <label for="genre-acoustic" class="genre-pill"><i class="fa-solid fa-guitar"></i> Acoustic</label>
+            <label for="genre-classical" class="genre-pill"><i class="fa-solid fa-music"></i> Cổ điển</label>
+          </div>
+
+          <!-- Bảng xếp hạng thịnh hành: Đa dạng các bài hát nổi tiếng -->
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fa-solid fa-fire-flame-curved"></i>
+              Bảng Xếp Hạng Bài Hát Nổi Tiếng & Thịnh Hành
+            </h2>
+            <label for="tab-favorites" class="section-title"
+              style="font-size: 13px; color: var(--primary-bright); cursor: pointer;">
+              Xem thư viện yêu thích ➔
+            </label>
+          </div>
+
+          <div class="tracklist-container trending-tracklist">
+            <div class="tracklist-header">
+              <span>#</span>
+              <span>Tiêu đề & Nghệ sĩ</span>
+              <span>Album / Thể loại</span>
+              <span>Trình phát nhạc Lossless</span>
+              <span style="text-align: right;"><i class="fa-regular fa-heart"></i></span>
+            </div>
+
+            <!-- Bài 1: Blinding Lights -->
+            <div class="track-row genre-synth">
+              <div class="track-col-index">1</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Blinding Lights <span class="song-badge badge-hit">HOT</span><span
+                      class="song-badge badge-global">GLOBAL</span></div>
+                  <div class="track-artist">The Weeknd Tribute • Synthwave Pop</div>
+                </div>
+              </div>
+              <div class="track-col-album">After Hours Deluxe</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-1" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">6:12</span>
+              </div>
+            </div>
+
+            <!-- Bài 2: See Tình -->
+            <div class="track-row genre-electronic">
+              <div class="track-col-index">2</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">See Tình (Electro Dance Remix) <span
+                      class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-hit">VIRAL</span></div>
+                  <div class="track-artist">Hoàng Thùy Linh Tribute • DTAP Sound</div>
+                </div>
+              </div>
+              <div class="track-col-album">Link Deluxe Album</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-2" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">6:35</span>
+              </div>
+            </div>
+
+            <!-- Bài 3: Nơi Này Có Anh -->
+            <div class="track-row genre-lofi">
+              <div class="track-col-index">3</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Nơi Này Có Anh (Lo-Fi Piano & Sunset) <span
+                      class="song-badge badge-vpop">V-POP</span></div>
+                  <div class="track-artist">Sơn Tùng M-TP Tribute • Chillhop</div>
+                </div>
+              </div>
+              <div class="track-col-album">M-TP Acoustic Sunset</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-3" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">7:03</span>
+              </div>
+            </div>
+
+            <!-- Bài 4: Starboy & Cyber Lights -->
+            <div class="track-row genre-synth">
+              <div class="track-col-index">4</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Starboy & Cyber Lights <span class="song-badge badge-global">GLOBAL</span>
+                  </div>
+                  <div class="track-artist">Daft Punk & The Weeknd Vibe</div>
+                </div>
+              </div>
+              <div class="track-col-album">Cyber City Nights</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-4" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">5:50</span>
+              </div>
+            </div>
+
+            <!-- Bài 5: Chúng Ta Của Hiện Tại -->
+            <div class="track-row genre-lofi">
+              <div class="track-col-index">5</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Chúng Ta Của Hiện Tại (Midnight R&B) <span
+                      class="song-badge badge-vpop">V-POP</span></div>
+                  <div class="track-artist">M-TP Soundscapes • Soul R&B</div>
+                </div>
+              </div>
+              <div class="track-col-album">Hoài Niệm 1980s</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-5" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">8:00</span>
+              </div>
+            </div>
+
+            <!-- Bài 6: Stay With Me (Tokyo City Pop) -->
+            <div class="track-row genre-synth">
+              <div class="track-col-index">6</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Stay With Me (Mayonaka no Door) <span class="song-badge badge-global">CITY
+                      POP</span></div>
+                  <div class="track-artist">Miki Matsubara Tribute • Retro Funk</div>
+                </div>
+              </div>
+              <div class="track-col-album">Tokyo City Pop Reimagined</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-6" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">5:05</span>
+              </div>
+            </div>
+
+            <!-- Bài 7: Shape of You & Acoustic Guitar -->
+            <div class="track-row genre-acoustic">
+              <div class="track-col-index">7</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Shape of You (Acoustic Fingerstyle) <span
+                      class="song-badge badge-hit">HOT</span></div>
+                  <div class="track-artist">Ed Sheeran Tribute • Mythium</div>
+                </div>
+              </div>
+              <div class="track-col-album">Acoustic Memories</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://archive.org/download/mythium/02_-_Mythium_-_Paper_Wings.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-7" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">3:35</span>
+              </div>
+            </div>
+
+            <!-- Bài 8: Faded (Progressive Electro) -->
+            <div class="track-row genre-electronic">
+              <div class="track-col-index">8</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Faded & Electric Dreams <span class="song-badge badge-global">EDM</span></div>
+                  <div class="track-artist">Alan Walker Vibe • Progressive House</div>
+                </div>
+              </div>
+              <div class="track-col-album">Different World Vol. 2</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://archive.org/download/mythium/01_-_Mythium_-_Blind_Faith.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-8" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">4:14</span>
+              </div>
+            </div>
+
+            <!-- Bài 9: Canon in D (Pachelbel) -->
+            <div class="track-row genre-classical">
+              <div class="track-col-index">9</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Canon in D (Orchestral Neon Strings) <span
+                      class="song-badge badge-global">CLASSICAL</span></div>
+                  <div class="track-artist">Johann Pachelbel • Immortal Harmony</div>
+                </div>
+              </div>
+              <div class="track-col-album">Masterpieces of History</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source
+                    src="https://upload.wikimedia.org/wikipedia/commons/transcoded/2/21/Johann_Sebastian_Bach_-_Air_on_the_G_String.ogg/Johann_Sebastian_Bach_-_Air_on_the_G_String.ogg.mp3"
+                    type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-9" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">4:35</span>
+              </div>
+            </div>
+
+            <!-- Bài 10: Moonlight Sonata (Beethoven) -->
+            <div class="track-row genre-classical">
+              <div class="track-col-index">10</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Moonlight Sonata (Piano Adagio) <span
+                      class="song-badge badge-global">CLASSICAL</span></div>
+                  <div class="track-artist">Ludwig van Beethoven • Deep Solitude</div>
+                </div>
+              </div>
+              <div class="track-col-album">Immortal Classics</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source
+                    src="https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cb/Moonlight_Sonata_-_Beethoven.ogg/Moonlight_Sonata_-_Beethoven.ogg.mp3"
+                    type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-10" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">5:10</span>
+              </div>
+            </div>
+
+            <!-- Bài 11: Midnight City (Synthwave) -->
+            <div class="track-row genre-synth">
+              <div class="track-col-index">11</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Midnight City <span class="song-badge badge-global">SYNTH</span></div>
+                  <div class="track-artist">M83 Tribute • French Electro Synth</div>
+                </div>
+              </div>
+              <div class="track-col-album">Hurry Up, We're Dreaming</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-11" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">4:04</span>
+              </div>
+            </div>
+
+            <!-- Bài 12: Nàng Thơ (Lo-Fi) -->
+            <div class="track-row genre-lofi">
+              <div class="track-col-index">12</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Nàng Thơ (Lo-Fi Chillhop Guitar) <span
+                      class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-chill">LO-FI</span></div>
+                  <div class="track-artist">Hoàng Dũng Tribute • Lofi Cafe</div>
+                </div>
+              </div>
+              <div class="track-col-album">Mùa Hè Chill Beats</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-12" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">4:15</span>
+              </div>
+            </div>
+
+            <!-- Bài 13: Ánh Nắng Của Anh (Acoustic) -->
+            <div class="track-row genre-acoustic">
+              <div class="track-col-index">13</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Ánh Nắng Của Anh (Acoustic Strings) <span
+                      class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-acoustic">ACOUSTIC</span>
+                  </div>
+                  <div class="track-artist">Đức Phúc Tribute • Khắc Hưng</div>
+                </div>
+              </div>
+              <div class="track-col-album">Chờ Em Đến Ngày Mai OST</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://archive.org/download/mythium/01_-_Mythium_-_Blind_Faith.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-13" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">4:12</span>
+              </div>
+            </div>
+
+            <!-- Bài 14: Waiting For Love (EDM) -->
+            <div class="track-row genre-electronic">
+              <div class="track-col-index">14</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Waiting For Love <span class="song-badge badge-global">GLOBAL</span><span
+                      class="song-badge badge-edm">EDM</span></div>
+                  <div class="track-artist">Avicii Tribute • Melodic Progressive House</div>
+                </div>
+              </div>
+              <div class="track-col-album">Stories Festival Anthem</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-14" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">3:50</span>
+              </div>
+            </div>
+
+            <!-- Bài 15: Vivaldi Winter (Classical) -->
+            <div class="track-row genre-classical">
+              <div class="track-col-index">15</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Four Seasons: Winter (Allegro) <span
+                      class="song-badge badge-global">CLASSICAL</span></div>
+                  <div class="track-artist">Antonio Vivaldi • Baroque Masterpieces</div>
+                </div>
+              </div>
+              <div class="track-col-album">The Four Seasons Concerto</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source
+                    src="https://upload.wikimedia.org/wikipedia/commons/transcoded/1/18/Vivaldi_Winter_mvt_1_Allegro_non_molto_-_The_Cooleys.ogg/Vivaldi_Winter_mvt_1_Allegro_non_molto_-_The_Cooleys.ogg.mp3"
+                    type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-15" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">3:30</span>
+              </div>
+            </div>
+
+            <!-- Bài 16: Resonance & Cyber Dreams (Synthwave) -->
+            <div class="track-row genre-synth">
+              <div class="track-col-index">16</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Resonance & Cyber Dreams <span
+                      class="song-badge badge-global">CHILLWAVE</span></div>
+                  <div class="track-artist">HOME Tribute • Retro Outrun Synth</div>
+                </div>
+              </div>
+              <div class="track-col-album">Odyssey Horizons</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-16" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">3:32</span>
+              </div>
+            </div>
+
+            <!-- Bài 17: Bao Tiền Một Mớ Bình Yên? (Lo-Fi) -->
+            <div class="track-row genre-lofi">
+              <div class="track-col-index">17</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Bao Tiền Một Mớ Bình Yên? <span
+                      class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-chill">LO-FI</span></div>
+                  <div class="track-artist">14 Casper & Bon Tribute • Cafe Chiều Mưa</div>
+                </div>
+              </div>
+              <div class="track-col-album">Gói Trọn Bình Yên</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-17" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">3:45</span>
+              </div>
+            </div>
+
+            <!-- Bài 18: Có Chàng Trai Viết Lên Cây (Acoustic) -->
+            <div class="track-row genre-acoustic">
+              <div class="track-col-index">18</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1445743432342-eac500ce72b7?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Có Chàng Trai Viết Lên Cây <span
+                      class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-acoustic">ACOUSTIC</span>
+                  </div>
+                  <div class="track-artist">Phan Mạnh Quỳnh Tribute • Acoustic Folk</div>
+                </div>
+              </div>
+              <div class="track-col-album">Mắt Biếc Original Soundtrack</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://archive.org/download/mythium/03_-_Mythium_-_The_Floating_Mountain.mp3"
+                    type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-18" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">4:50</span>
+              </div>
+            </div>
+
+            <!-- Bài 19: Titanium (EDM) -->
+            <div class="track-row genre-electronic">
+              <div class="track-col-index">19</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Titanium (Festival Big Room Anthem) <span
+                      class="song-badge badge-hit">HOT</span><span class="song-badge badge-edm">EDM</span></div>
+                  <div class="track-artist">David Guetta & Sia Tribute • Electro Anthem</div>
+                </div>
+              </div>
+              <div class="track-col-album">Nothing But The Beat Deluxe</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-19" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">4:05</span>
+              </div>
+            </div>
+
+            <!-- Bài 20: Chopin Nocturne (Classical) -->
+            <div class="track-row genre-classical">
+              <div class="track-col-index">20</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1520523839898-507127083049?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Nocturne Op. 9 No. 2 in E-flat <span
+                      class="song-badge badge-global">CLASSICAL</span></div>
+                  <div class="track-artist">Frédéric Chopin • Poetic Piano Nights</div>
+                </div>
+              </div>
+              <div class="track-col-album">Chopin Piano Essentials</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source
+                    src="https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4e/Chopin_Nocturne_Op_9_No_2.ogg/Chopin_Nocturne_Op_9_No_2.ogg.mp3"
+                    type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-20" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">4:25</span>
+              </div>
+            </div>
+
+            <!-- Bài 21: Chạy Ngay Đi (Synthwave Cyber) -->
+            <div class="track-row genre-synth">
+              <div class="track-col-index">21</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Chạy Ngay Đi (Synthwave Cyber Remix) <span
+                      class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-global">CYBER</span></div>
+                  <div class="track-artist">Sơn Tùng M-TP Tribute • Future Cyber Bass</div>
+                </div>
+              </div>
+              <div class="track-col-album">Future Cyber Dimension</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-21" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">4:07</span>
+              </div>
+            </div>
+
+            <!-- Bài 22: Coffee & Rainy Windows (Lo-Fi) -->
+            <div class="track-row genre-lofi">
+              <div class="track-col-index">22</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Coffee & Rainy Windows <span class="song-badge badge-chill">STUDY</span></div>
+                  <div class="track-artist">Luna Shadow • Ambient Beats & Rain</div>
+                </div>
+              </div>
+              <div class="track-col-album">Velvet Chill Vol. 1</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-22" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">7:03</span>
+              </div>
+            </div>
+
+            <!-- Bài 23: Perfect (Acoustic) -->
+            <div class="track-row genre-acoustic">
+              <div class="track-col-index">23</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1485579149621-3123dd979885?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Perfect (Fingerstyle Ballad & Warm Strings) <span
+                      class="song-badge badge-hit">HOT</span></div>
+                  <div class="track-artist">Ed Sheeran Tribute • Acoustic Duo</div>
+                </div>
+              </div>
+              <div class="track-col-album">Divide Acoustic Sessions</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://archive.org/download/mythium/02_-_Mythium_-_Paper_Wings.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-23" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">4:23</span>
+              </div>
+            </div>
+
+            <!-- Bài 24: Để Mị Nói Cho Mà Nghe (Vinahouse / EDM) -->
+            <div class="track-row genre-electronic">
+              <div class="track-col-index">24</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Để Mị Nói Cho Mà Nghe (Vinahouse Remix) <span
+                      class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-hit">VIRAL</span></div>
+                  <div class="track-artist">Hoàng Thùy Linh Tribute • DTAP Club Mix</div>
+                </div>
+              </div>
+              <div class="track-col-album">Hoàng Album Extended</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-24" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">3:40</span>
+              </div>
+            </div>
+
+            <!-- Bài 25: Nightcall & Retro Neon (Synthwave) -->
+            <div class="track-row genre-synth">
+              <div class="track-col-index">25</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Nightcall & Retro Neon Drive <span
+                      class="song-badge badge-global">SYNTH</span></div>
+                  <div class="track-artist">Kavinsky Tribute • Drive OST Retro Wave</div>
+                </div>
+              </div>
+              <div class="track-col-album">Outrun 1986 Deluxe</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-25" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">4:18</span>
+              </div>
+            </div>
+
+            <!-- Bài 26: Velvet Sunset Lounge (Lo-Fi) -->
+            <div class="track-row genre-lofi">
+              <div class="track-col-index">26</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Velvet Sunset Lounge <span class="song-badge badge-chill">CHILLOUT</span>
+                  </div>
+                  <div class="track-artist">Tokyo Mirage • Sunset Chillout Beats</div>
+                </div>
+              </div>
+              <div class="track-col-album">Sunset Sessions 2026</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-26" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">8:00</span>
+              </div>
+            </div>
+
+            <!-- Bài 27: Paper Wings & Dreams (Acoustic) -->
+            <div class="track-row genre-acoustic">
+              <div class="track-col-index">27</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Paper Wings & Dreams <span class="song-badge badge-acoustic">ACOUSTIC</span>
+                  </div>
+                  <div class="track-artist">Mythium Acoustic Duo • Clean Picking</div>
+                </div>
+              </div>
+              <div class="track-col-album">Acoustic Memories Vol. 2</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://archive.org/download/mythium/02_-_Mythium_-_Paper_Wings.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-27" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">3:35</span>
+              </div>
+            </div>
+
+            <!-- Bài 28: Hyperdrive 2099 (EDM) -->
+            <div class="track-row genre-electronic">
+              <div class="track-col-index">28</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Hyperdrive 2099 (Cyberpunk Drop) <span
+                      class="song-badge badge-edm">RAVE</span></div>
+                  <div class="track-artist">Kira & The Wave • Hard Dance & Bassline</div>
+                </div>
+              </div>
+              <div class="track-col-album">Cyber City Nights</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-28" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">6:35</span>
+              </div>
+            </div>
+
+            <!-- Bài 29: Em Dạo Này (Lo-Fi) -->
+            <div class="track-row genre-lofi">
+              <div class="track-col-index">29</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1513829596324-4bb2800c5efb?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Em Dạo Này (Lo-Fi Bedroom Pop) <span
+                      class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-chill">LO-FI</span></div>
+                  <div class="track-artist">Ngọt Tribute • Góc Ban Công Chill</div>
+                </div>
+              </div>
+              <div class="track-col-album">Góc Ban Công Chiều Hà Nội</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-29" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">3:50</span>
+              </div>
+            </div>
+
+            <!-- Bài 30: The Spectre & Neon Lights (EDM) -->
+            <div class="track-row genre-electronic">
+              <div class="track-col-index">30</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">The Spectre & Neon Lights <span
+                      class="song-badge badge-global">GLOBAL</span><span class="song-badge badge-edm">EDM</span></div>
+                  <div class="track-artist">Alan Walker Festival Vibe • Big Room</div>
+                </div>
+              </div>
+              <div class="track-col-album">World of Walker 2026</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-30" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">3:45</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Album tiêu biểu (Featured Albums) -->
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fa-solid fa-compact-disc"></i>
+              Album tiêu biểu toàn cầu
+            </h2>
+          </div>
+          <div class="cards-grid">
+            <label for="tab-detail-album" class="media-card">
+              <div class="card-cover-wrapper">
+                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+                  class="card-cover-img" alt="Neon Horizons">
+              </div>
+              <div class="card-title">Neon Horizons (After Hours)</div>
+              <div class="card-subtitle">The Weeknd & Kira • 2026</div>
+            </label>
+
+            <label for="tab-detail-album" class="media-card">
+              <div class="card-cover-wrapper">
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80"
+                  class="card-cover-img" alt="Velvet Chill">
+              </div>
+              <div class="card-title">V-Pop Sunset Chillhop</div>
+              <div class="card-subtitle">Sơn Tùng M-TP & Luna • 2025</div>
+            </label>
+
+            <label for="tab-detail-album" class="media-card">
+              <div class="card-cover-wrapper">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80"
+                  class="card-cover-img" alt="Cyber City Nights">
+              </div>
+              <div class="card-title">Cyber City Nights</div>
+              <div class="card-subtitle">Daft Punk Vibe • 2026</div>
+            </label>
+
+            <label for="tab-detail-album" class="media-card">
+              <div class="card-cover-wrapper">
+                <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&auto=format&fit=crop&q=80"
+                  class="card-cover-img" alt="Acoustic Memories">
+              </div>
+              <div class="card-title">Acoustic & Coffee Hits</div>
+              <div class="card-subtitle">Ed Sheeran Vibe • 2024</div>
+            </label>
+          </div>
+
+          <!-- Playlist tuyển chọn (Curated Playlists) -->
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              Playlist dành riêng cho bạn
+            </h2>
+          </div>
+          <div class="cards-grid">
+            <label for="tab-detail-playlist" class="media-card">
+              <div class="card-cover-wrapper">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80"
+                  class="card-cover-img" alt="VYBE Trending">
+              </div>
+              <div class="card-title">Global Top 50 Hits 2026</div>
+              <div class="card-subtitle">Biên tập bởi VYBE Editorial</div>
+            </label>
+
+            <label for="tab-detail-playlist" class="media-card">
+              <div class="card-cover-wrapper">
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80"
+                  class="card-cover-img" alt="Deep Focus">
+              </div>
+              <div class="card-title">V-Pop Viral & TikTop Hits</div>
+              <div class="card-subtitle">Top bài hát nghe nhiều nhất</div>
+            </label>
+
+            <label for="tab-detail-playlist" class="media-card">
+              <div class="card-cover-wrapper">
+                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+                  class="card-cover-img" alt="Midnight Purple Drive">
+              </div>
+              <div class="card-title">Midnight Purple Drive</div>
+              <div class="card-subtitle">Bassline căng tràn & Phonk</div>
+            </label>
+
+            <label for="tab-detail-playlist" class="media-card">
+              <div class="card-cover-wrapper">
+                <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&auto=format&fit=crop&q=80"
+                  class="card-cover-img" alt="Acoustic Cafe">
+              </div>
+              <div class="card-title">Acoustic Cafe & Chill</div>
+              <div class="card-subtitle">Giai điệu mộc mạc sáng sớm</div>
+            </label>
+          </div>
+
+          <!-- Nghệ sĩ hàng đầu (Top Artists) -->
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fa-solid fa-star"></i>
+              Nghệ sĩ & Siêu sao nổi bật
+            </h2>
+          </div>
+          <div class="artists-grid">
+            <div class="artist-card">
+              <div class="artist-avatar-wrapper">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80"
+                  class="artist-avatar-img" alt="The Weeknd Tribute">
+              </div>
+              <div class="card-title">The Weeknd Tribute</div>
+              <div class="card-subtitle">105M người theo dõi</div>
+            </div>
+
+            <div class="artist-card">
+              <div class="artist-avatar-wrapper">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80"
+                  class="artist-avatar-img" alt="Sơn Tùng M-TP Tribute">
+              </div>
+              <div class="card-title">Sơn Tùng M-TP Vibe</div>
+              <div class="card-subtitle">14.8M người theo dõi</div>
+            </div>
+
+            <div class="artist-card">
+              <div class="artist-avatar-wrapper">
+                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&auto=format&fit=crop&q=80"
+                  class="artist-avatar-img" alt="Hoàng Thùy Linh Tribute">
+              </div>
+              <div class="card-title">Hoàng Thùy Linh Vibe</div>
+              <div class="card-subtitle">9.2M người theo dõi</div>
+            </div>
+
+            <div class="artist-card">
+              <div class="artist-avatar-wrapper">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop&q=80"
+                  class="artist-avatar-img" alt="Luna">
+              </div>
+              <div class="card-title">Luna Shadow</div>
+              <div class="card-subtitle">2.4M người theo dõi</div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ==================== VIEW 2: TÌM KIẾM THEO THỂ LOẠI (SEARCH & GENRES VIEW) ==================== -->
+        <section class="view-section" id="view-search">
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              Khám phá & Tìm kiếm thể loại
+            </h2>
+          </div>
+
+          <!-- Thanh lọc thể loại nhanh (Pill Buttons - Đồng bộ với trang chủ) -->
+          <div class="genre-pills-row">
+            <label for="genre-all" class="genre-pill"><i class="fa-solid fa-compass"></i> Tất cả</label>
+            <label for="genre-synth" class="genre-pill"><i class="fa-solid fa-bolt"></i> Synthwave</label>
+            <label for="genre-lofi" class="genre-pill"><i class="fa-solid fa-cloud-moon"></i> Lo-Fi Chill</label>
+            <label for="genre-electronic" class="genre-pill"><i class="fa-solid fa-wave-square"></i> Electronic</label>
+            <label for="genre-acoustic" class="genre-pill"><i class="fa-solid fa-guitar"></i> Acoustic</label>
+            <label for="genre-classical" class="genre-pill"><i class="fa-solid fa-music"></i> Cổ điển</label>
+          </div>
+
+          <!-- 4 Danh mục thể loại nổi bật (Theo đúng thiết kế trong hình ảnh yêu cầu) -->
+          <div class="genre-cards-grid" id="genre-overview">
+            <a href="#cat-synthwave" class="genre-category-card genre-card-synth">
+              <div>
+                <h3 class="genre-card-title">Synthwave & Cyber</h3>
+                <p class="genre-card-desc">Âm thanh điện tử viễn tưởng tương lai</p>
+              </div>
+              <div class="genre-card-meta">
+                <span class="genre-card-badge"><i class="fa-solid fa-bolt"></i> 8 BÀI HÁT</span>
+                <span class="genre-card-arrow"><i class="fa-solid fa-arrow-down"></i></span>
+              </div>
+            </a>
+
+            <a href="#cat-lofi" class="genre-category-card genre-card-lofi">
+              <div>
+                <h3 class="genre-card-title">Lo-Fi & Chill</h3>
+                <p class="genre-card-desc">Thư giãn sâu và tập trung học tập</p>
+              </div>
+              <div class="genre-card-meta">
+                <span class="genre-card-badge"><i class="fa-solid fa-cloud-moon"></i> 8 BÀI HÁT</span>
+                <span class="genre-card-arrow"><i class="fa-solid fa-arrow-down"></i></span>
+              </div>
+            </a>
+
+            <a href="#cat-acoustic" class="genre-category-card genre-card-acoustic">
+              <div>
+                <h3 class="genre-card-title">Acoustic & Coffee</h3>
+                <p class="genre-card-desc">Guitar mộc mạc và giọng ca ấm áp</p>
+              </div>
+              <div class="genre-card-meta">
+                <span class="genre-card-badge"><i class="fa-solid fa-guitar"></i> 8 BÀI HÁT</span>
+                <span class="genre-card-arrow"><i class="fa-solid fa-arrow-down"></i></span>
+              </div>
+            </a>
+
+            <a href="#cat-edm" class="genre-category-card genre-card-edm">
+              <div>
+                <h3 class="genre-card-title">EDM & Rave</h3>
+                <p class="genre-card-desc">Bùng nổ năng lượng cùng bassline căng tràn</p>
+              </div>
+              <div class="genre-card-meta">
+                <span class="genre-card-badge"><i class="fa-solid fa-fire"></i> 8 BÀI HÁT</span>
+                <span class="genre-card-arrow"><i class="fa-solid fa-arrow-down"></i></span>
+              </div>
+            </a>
+
+            <a href="#cat-classical" class="genre-category-card genre-card-classical">
+              <div>
+                <h3 class="genre-card-title">Cổ Điển & Thính Phòng</h3>
+                <p class="genre-card-desc">Kiệt tác giao hưởng và piano bất hủ mọi thời đại</p>
+              </div>
+              <div class="genre-card-meta">
+                <span class="genre-card-badge"><i class="fa-solid fa-music"></i> 4 BÀI HÁT</span>
+                <span class="genre-card-arrow"><i class="fa-solid fa-arrow-down"></i></span>
+              </div>
+            </a>
+          </div>
+
+          <!-- ==================== DANH MỤC 1: SYNTHWAVE & CYBER ==================== -->
+          <div id="cat-synthwave" style="margin-bottom: 44px; scroll-margin-top: 90px;">
+            <div class="section-header">
+              <h3 class="section-title" style="font-size: 20px;">
+                <i class="fa-solid fa-bolt" style="color: #6366f1;"></i>
+                Thể loại: Synthwave & Cyber
+                <span class="song-badge badge-global">8 BÀI HÁT</span>
+              </h3>
+              <a href="#genre-overview" class="section-title"
+                style="font-size: 13px; color: var(--text-muted); text-decoration: none;">
+                Quay lại danh mục ⬆
+              </a>
+            </div>
+
+            <div class="tracklist-container">
+              <div class="tracklist-header">
+                <span>#</span>
+                <span>Tiêu đề & Nghệ sĩ</span>
+                <span>Album</span>
+                <span>Trình phát Lossless</span>
+                <span style="text-align: right;"><i class="fa-regular fa-heart"></i></span>
+              </div>
+
+              <!-- Bài 1 -->
+              <div class="track-row">
+                <div class="track-col-index">1</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Blinding Lights <span class="song-badge badge-hit">HOT</span><span
+                        class="song-badge badge-global">GLOBAL</span></div>
+                    <div class="track-artist">The Weeknd Tribute • Synthwave Pop</div>
+                  </div>
+                </div>
+                <div class="track-col-album">After Hours Deluxe</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-1" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">6:12</span>
+                </div>
+              </div>
+
+              <!-- Bài 2 -->
+              <div class="track-row">
+                <div class="track-col-index">2</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Starboy & Cyber Lights <span class="song-badge badge-global">GLOBAL</span>
+                    </div>
+                    <div class="track-artist">Daft Punk & The Weeknd Vibe</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Cyber City Nights</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-4" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">5:50</span>
+                </div>
+              </div>
+
+              <!-- Bài 3 -->
+              <div class="track-row">
+                <div class="track-col-index">3</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Stay With Me (Mayonaka no Door) <span class="song-badge badge-global">CITY
+                        POP</span></div>
+                    <div class="track-artist">Miki Matsubara Tribute • Retro Funk 1980s</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Tokyo City Pop Reimagined</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-6" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">5:05</span>
+                </div>
+              </div>
+
+              <!-- Bài 4 -->
+              <div class="track-row">
+                <div class="track-col-index">4</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Midnight City <span class="song-badge badge-global">SYNTH</span></div>
+                    <div class="track-artist">M83 Tribute • French Electro Synth</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Hurry Up, We're Dreaming</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-11" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">4:04</span>
+                </div>
+              </div>
+
+              <!-- Bài 5 -->
+              <div class="track-row">
+                <div class="track-col-index">5</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Resonance & Cyber Dreams <span
+                        class="song-badge badge-global">CHILLWAVE</span></div>
+                    <div class="track-artist">HOME Tribute • Retro Outrun Synth</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Odyssey Horizons</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-16" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">3:32</span>
+                </div>
+              </div>
+
+              <!-- Bài 6 -->
+              <div class="track-row">
+                <div class="track-col-index">6</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Chạy Ngay Đi (Synthwave Cyber Remix) <span
+                        class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-global">CYBER</span>
+                    </div>
+                    <div class="track-artist">Sơn Tùng M-TP Tribute • Future Cyber Bass</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Future Cyber Dimension</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-21" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">4:07</span>
+                </div>
+              </div>
+
+              <!-- Bài 7 -->
+              <div class="track-row">
+                <div class="track-col-index">7</div>
+                <div class="track-col-title">
+                  <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Nightcall & Retro Neon Drive <span
+                        class="song-badge badge-global">SYNTH</span></div>
+                    <div class="track-artist">Kavinsky Tribute • Drive OST Retro Wave</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Outrun 1986 Deluxe</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-25" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">4:18</span>
+                </div>
+              </div>
+
+              <!-- Bài 8 -->
+              <div class="track-row">
+                <div class="track-col-index">8</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Midnight Drive in Tokyo <span class="song-badge badge-global">OUTRUN</span>
+                    </div>
+                    <div class="track-artist">Kira & The Wave • Outrun Synth</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Neon Horizons</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-1" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">6:12</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== DANH MỤC 2: LO-FI & CHILL ==================== -->
+          <div id="cat-lofi" style="margin-bottom: 44px; scroll-margin-top: 90px;">
+            <div class="section-header">
+              <h3 class="section-title" style="font-size: 20px;">
+                <i class="fa-solid fa-cloud-moon" style="color: #ec4899;"></i>
+                Thể loại: Lo-Fi & Chill
+                <span class="song-badge badge-vpop">8 BÀI HÁT</span>
+              </h3>
+              <a href="#genre-overview" class="section-title"
+                style="font-size: 13px; color: var(--text-muted); text-decoration: none;">
+                Quay lại danh mục ⬆
+              </a>
+            </div>
+
+            <div class="tracklist-container">
+              <div class="tracklist-header">
+                <span>#</span>
+                <span>Tiêu đề & Nghệ sĩ</span>
+                <span>Album</span>
+                <span>Trình phát Lossless</span>
+                <span style="text-align: right;"><i class="fa-regular fa-heart"></i></span>
+              </div>
+
+              <!-- Bài 1 -->
+              <div class="track-row">
+                <div class="track-col-index">1</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Nơi Này Có Anh (Lo-Fi Piano & Sunset) <span
+                        class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-chill">LO-FI</span>
+                    </div>
+                    <div class="track-artist">Sơn Tùng M-TP Tribute • Chillhop Beat</div>
+                  </div>
+                </div>
+                <div class="track-col-album">M-TP Acoustic Sunset</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-3" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">7:03</span>
+                </div>
+              </div>
+
+              <!-- Bài 2 -->
+              <div class="track-row">
+                <div class="track-col-index">2</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Chúng Ta Của Hiện Tại (Midnight R&B) <span
+                        class="song-badge badge-vpop">V-POP</span></div>
+                    <div class="track-artist">M-TP Soundscapes • Soul R&B Lo-Fi</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Hoài Niệm 1980s</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-5" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">8:00</span>
+                </div>
+              </div>
+
+              <!-- Bài 3 -->
+              <div class="track-row">
+                <div class="track-col-index">3</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Nàng Thơ (Lo-Fi Chillhop Guitar) <span
+                        class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-chill">LO-FI</span>
+                    </div>
+                    <div class="track-artist">Hoàng Dũng Tribute • Lofi Cafe</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Mùa Hè Chill Beats</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-12" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">4:15</span>
+                </div>
+              </div>
+
+              <!-- Bài 4 -->
+              <div class="track-row">
+                <div class="track-col-index">4</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Bao Tiền Một Mớ Bình Yên? <span
+                        class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-chill">LO-FI</span>
+                    </div>
+                    <div class="track-artist">14 Casper & Bon Tribute • Cafe Chiều Mưa</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Gói Trọn Bình Yên</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-17" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">3:45</span>
+                </div>
+              </div>
+
+              <!-- Bài 5 -->
+              <div class="track-row">
+                <div class="track-col-index">5</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Coffee & Rainy Windows <span class="song-badge badge-chill">STUDY</span>
+                    </div>
+                    <div class="track-artist">Luna Shadow • Ambient Beats & Rain</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Velvet Chill Vol. 1</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-22" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">7:03</span>
+                </div>
+              </div>
+
+              <!-- Bài 6 -->
+              <div class="track-row">
+                <div class="track-col-index">6</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Velvet Sunset Lounge <span class="song-badge badge-chill">CHILLOUT</span>
+                    </div>
+                    <div class="track-artist">Tokyo Mirage • Sunset Chillout Beats</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Sunset Sessions 2026</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-26" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">8:00</span>
+                </div>
+              </div>
+
+              <!-- Bài 7 -->
+              <div class="track-row">
+                <div class="track-col-index">7</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1513829596324-4bb2800c5efb?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Em Dạo Này (Lo-Fi Bedroom Pop) <span
+                        class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-chill">LO-FI</span>
+                    </div>
+                    <div class="track-artist">Ngọt Tribute • Góc Ban Công Chill</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Góc Ban Công Chiều Hà Nội</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-29" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">3:50</span>
+                </div>
+              </div>
+
+              <!-- Bài 8 -->
+              <div class="track-row">
+                <div class="track-col-index">8</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Snowfall in Kyoto <span class="song-badge badge-chill">DEEP SLEEP</span>
+                    </div>
+                    <div class="track-artist">Lofi Sleep Beats • Zen Garden Rain</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Kyoto Midnight Focus</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-31" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">5:20</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== DANH MỤC 3: ACOUSTIC & COFFEE ==================== -->
+          <div id="cat-acoustic" style="margin-bottom: 44px; scroll-margin-top: 90px;">
+            <div class="section-header">
+              <h3 class="section-title" style="font-size: 20px;">
+                <i class="fa-solid fa-guitar" style="color: #10b981;"></i>
+                Thể loại: Acoustic & Coffee
+                <span class="song-badge badge-hit">8 BÀI HÁT</span>
+              </h3>
+              <a href="#genre-overview" class="section-title"
+                style="font-size: 13px; color: var(--text-muted); text-decoration: none;">
+                Quay lại danh mục ⬆
+              </a>
+            </div>
+
+            <div class="tracklist-container">
+              <div class="tracklist-header">
+                <span>#</span>
+                <span>Tiêu đề & Nghệ sĩ</span>
+                <span>Album</span>
+                <span>Trình phát Lossless</span>
+                <span style="text-align: right;"><i class="fa-regular fa-heart"></i></span>
+              </div>
+
+              <!-- Bài 1 -->
+              <div class="track-row">
+                <div class="track-col-index">1</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Shape of You (Fingerstyle Acoustic) <span
+                        class="song-badge badge-hit">HOT</span></div>
+                    <div class="track-artist">Ed Sheeran Tribute • Mythium Duo</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Acoustic Hits & Coffee</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://archive.org/download/mythium/02_-_Mythium_-_Paper_Wings.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-7" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">3:35</span>
+                </div>
+              </div>
+
+              <!-- Bài 2 -->
+              <div class="track-row">
+                <div class="track-col-index">2</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Ánh Nắng Của Anh (Warm Acoustic Strings) <span
+                        class="song-badge badge-vpop">V-POP</span><span
+                        class="song-badge badge-acoustic">ACOUSTIC</span></div>
+                    <div class="track-artist">Đức Phúc Tribute • Khắc Hưng</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Chờ Em Đến Ngày Mai OST</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://archive.org/download/mythium/01_-_Mythium_-_Blind_Faith.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-13" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">4:12</span>
+                </div>
+              </div>
+
+              <!-- Bài 3 -->
+              <div class="track-row">
+                <div class="track-col-index">3</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1445743432342-eac500ce72b7?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Có Chàng Trai Viết Lên Cây <span
+                        class="song-badge badge-vpop">V-POP</span><span
+                        class="song-badge badge-acoustic">ACOUSTIC</span></div>
+                    <div class="track-artist">Phan Mạnh Quỳnh Tribute • Acoustic Folk</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Mắt Biếc Original Soundtrack</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://archive.org/download/mythium/03_-_Mythium_-_The_Floating_Mountain.mp3"
+                      type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-18" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">4:50</span>
+                </div>
+              </div>
+
+              <!-- Bài 4 -->
+              <div class="track-row">
+                <div class="track-col-index">4</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1485579149621-3123dd979885?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Perfect (Fingerstyle Ballad & Warm Strings) <span
+                        class="song-badge badge-hit">HOT</span></div>
+                    <div class="track-artist">Ed Sheeran Tribute • Acoustic Duo</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Divide Acoustic Sessions</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://archive.org/download/mythium/02_-_Mythium_-_Paper_Wings.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-23" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">4:23</span>
+                </div>
+              </div>
+
+              <!-- Bài 5 -->
+              <div class="track-row">
+                <div class="track-col-index">5</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Paper Wings & Dreams <span class="song-badge badge-acoustic">ACOUSTIC</span>
+                    </div>
+                    <div class="track-artist">Mythium Acoustic Duo • Clean Picking</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Acoustic Memories Vol. 2</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://archive.org/download/mythium/02_-_Mythium_-_Paper_Wings.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-27" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">3:35</span>
+                </div>
+              </div>
+
+              <!-- Bài 6 -->
+              <div class="track-row">
+                <div class="track-col-index">6</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Blind Faith (Warm Guitars & Vocals)</div>
+                    <div class="track-artist">Mythium Duo • Warm Guitars</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Acoustic Memories</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://archive.org/download/mythium/01_-_Mythium_-_Blind_Faith.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-8" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">4:14</span>
+                </div>
+              </div>
+
+              <!-- Bài 7 -->
+              <div class="track-row">
+                <div class="track-col-index">7</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">The Floating Mountain (Ambient Acoustic)</div>
+                    <div class="track-artist">Mythium Ambient Project</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Mystic Realms</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://archive.org/download/mythium/03_-_Mythium_-_The_Floating_Mountain.mp3"
+                      type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-5" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">3:56</span>
+                </div>
+              </div>
+
+              <!-- Bài 8 -->
+              <div class="track-row">
+                <div class="track-col-index">8</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Until I Found You (Vintage 1950s Warm Acoustic)</div>
+                    <div class="track-artist">Stephen Sanchez Tribute • Retro Romance</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Vintage Acoustic Romance</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://archive.org/download/mythium/02_-_Mythium_-_Paper_Wings.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-32" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">3:00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== DANH MỤC 4: EDM & RAVE ==================== -->
+          <div id="cat-edm" style="margin-bottom: 44px; scroll-margin-top: 90px;">
+            <div class="section-header">
+              <h3 class="section-title" style="font-size: 20px;">
+                <i class="fa-solid fa-fire" style="color: #ef4444;"></i>
+                Thể loại: EDM & Rave
+                <span class="song-badge badge-hit">8 BÀI HÁT</span>
+              </h3>
+              <a href="#genre-overview" class="section-title"
+                style="font-size: 13px; color: var(--text-muted); text-decoration: none;">
+                Quay lại danh mục ⬆
+              </a>
+            </div>
+
+            <div class="tracklist-container">
+              <div class="tracklist-header">
+                <span>#</span>
+                <span>Tiêu đề & Nghệ sĩ</span>
+                <span>Album</span>
+                <span>Trình phát Lossless</span>
+                <span style="text-align: right;"><i class="fa-regular fa-heart"></i></span>
+              </div>
+
+              <!-- Bài 1 -->
+              <div class="track-row">
+                <div class="track-col-index">1</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">See Tình (Electro Dance Remix) <span
+                        class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-hit">VIRAL</span></div>
+                    <div class="track-artist">Hoàng Thùy Linh Tribute • DTAP Sound</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Link Deluxe Album</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-2" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">6:35</span>
+                </div>
+              </div>
+
+              <!-- Bài 2 -->
+              <div class="track-row">
+                <div class="track-col-index">2</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Faded & Electric Dreams <span class="song-badge badge-global">EDM</span>
+                    </div>
+                    <div class="track-artist">Alan Walker Vibe • Progressive House</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Different World Vol. 2</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-8" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">4:14</span>
+                </div>
+              </div>
+
+              <!-- Bài 3 -->
+              <div class="track-row">
+                <div class="track-col-index">3</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Waiting For Love <span class="song-badge badge-global">GLOBAL</span><span
+                        class="song-badge badge-edm">EDM</span></div>
+                    <div class="track-artist">Avicii Tribute • Melodic Progressive House</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Stories Festival Anthem</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-14" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">3:50</span>
+                </div>
+              </div>
+
+              <!-- Bài 4 -->
+              <div class="track-row">
+                <div class="track-col-index">4</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Titanium (Festival Big Room Anthem) <span
+                        class="song-badge badge-hit">HOT</span><span class="song-badge badge-edm">EDM</span></div>
+                    <div class="track-artist">David Guetta & Sia Tribute • Electro Anthem</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Nothing But The Beat Deluxe</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-19" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">4:05</span>
+                </div>
+              </div>
+
+              <!-- Bài 5 -->
+              <div class="track-row">
+                <div class="track-col-index">5</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Để Mị Nói Cho Mà Nghe (Vinahouse Remix) <span
+                        class="song-badge badge-vpop">V-POP</span><span class="song-badge badge-hit">VIRAL</span></div>
+                    <div class="track-artist">Hoàng Thùy Linh Tribute • DTAP Club Mix</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Hoàng Album Extended</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-24" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">3:40</span>
+                </div>
+              </div>
+
+              <!-- Bài 6 -->
+              <div class="track-row">
+                <div class="track-col-index">6</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Hyperdrive 2099 (Cyberpunk Drop)</div>
+                    <div class="track-artist">Kira & The Wave • Hard Dance & Rave</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Cyber City Nights</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-28" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">6:35</span>
+                </div>
+              </div>
+
+              <!-- Bài 7 -->
+              <div class="track-row">
+                <div class="track-col-index">7</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Cyber Romance (Festival Drop)</div>
+                    <div class="track-artist">Aether Sound • Bassline House</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Cyber City Nights</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-4" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">5:50</span>
+                </div>
+              </div>
+
+              <!-- Bài 8 -->
+              <div class="track-row">
+                <div class="track-col-index">8</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">The Spectre & Neon Lights <span
+                        class="song-badge badge-global">GLOBAL</span><span class="song-badge badge-edm">EDM</span></div>
+                    <div class="track-artist">Alan Walker Festival Vibe • Big Room</div>
+                  </div>
+                </div>
+                <div class="track-col-album">World of Walker 2026</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3" type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-30" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">3:45</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== DANH MỤC 5: CỔ ĐIỂN & THÍNH PHÒNG ==================== -->
+          <div id="cat-classical" style="margin-bottom: 44px; scroll-margin-top: 90px;">
+            <div class="section-header">
+              <h3 class="section-title" style="font-size: 20px;">
+                <i class="fa-solid fa-music" style="color: #a855f7;"></i>
+                Thể loại: Cổ Điển & Thính Phòng
+                <span class="song-badge badge-global">4 BÀI HÁT</span>
+              </h3>
+              <a href="#genre-overview" class="section-title"
+                style="font-size: 13px; color: var(--text-muted); text-decoration: none;">
+                Quay lại danh mục ⬆
+              </a>
+            </div>
+
+            <div class="tracklist-container">
+              <div class="tracklist-header">
+                <span>#</span>
+                <span>Tiêu đề & Nghệ sĩ</span>
+                <span>Album</span>
+                <span>Trình phát Lossless</span>
+                <span style="text-align: right;"><i class="fa-regular fa-heart"></i></span>
+              </div>
+
+              <!-- Bài 1 -->
+              <div class="track-row">
+                <div class="track-col-index">1</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Canon in D (Orchestral Neon Strings) <span
+                        class="song-badge badge-global">CLASSICAL</span></div>
+                    <div class="track-artist">Johann Pachelbel • Immortal Harmony</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Masterpieces of History</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source
+                      src="https://upload.wikimedia.org/wikipedia/commons/transcoded/2/21/Johann_Sebastian_Bach_-_Air_on_the_G_String.ogg/Johann_Sebastian_Bach_-_Air_on_the_G_String.ogg.mp3"
+                      type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-9" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">4:35</span>
+                </div>
+              </div>
+
+              <!-- Bài 2 -->
+              <div class="track-row">
+                <div class="track-col-index">2</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Moonlight Sonata (Piano Adagio) <span
+                        class="song-badge badge-global">CLASSICAL</span></div>
+                    <div class="track-artist">Ludwig van Beethoven • Deep Solitude</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Immortal Classics</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source
+                      src="https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cb/Moonlight_Sonata_-_Beethoven.ogg/Moonlight_Sonata_-_Beethoven.ogg.mp3"
+                      type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-10" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">5:10</span>
+                </div>
+              </div>
+
+              <!-- Bài 3 -->
+              <div class="track-row">
+                <div class="track-col-index">3</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Four Seasons: Winter (Allegro) <span
+                        class="song-badge badge-global">CLASSICAL</span></div>
+                    <div class="track-artist">Antonio Vivaldi • Baroque Masterpieces</div>
+                  </div>
+                </div>
+                <div class="track-col-album">The Four Seasons Concerto</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source
+                      src="https://upload.wikimedia.org/wikipedia/commons/transcoded/1/18/Vivaldi_Winter_mvt_1_Allegro_non_molto_-_The_Cooleys.ogg/Vivaldi_Winter_mvt_1_Allegro_non_molto_-_The_Cooleys.ogg.mp3"
+                      type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-15" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">3:30</span>
+                </div>
+              </div>
+
+              <!-- Bài 4 -->
+              <div class="track-row">
+                <div class="track-col-index">4</div>
+                <div class="track-col-title">
+                  <img
+                    src="https://images.unsplash.com/photo-1520523839898-507127083049?w=600&auto=format&fit=crop&q=80"
+                    class="track-thumb" alt="Cover">
+                  <div class="track-names">
+                    <div class="track-name">Nocturne Op. 9 No. 2 in E-flat <span
+                        class="song-badge badge-global">CLASSICAL</span></div>
+                    <div class="track-artist">Frédéric Chopin • Poetic Piano Nights</div>
+                  </div>
+                </div>
+                <div class="track-col-album">Chopin Piano Essentials</div>
+                <div class="track-col-player">
+                  <audio controls preload="none">
+                    <source
+                      src="https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4e/Chopin_Nocturne_Op_9_No_2.ogg/Chopin_Nocturne_Op_9_No_2.ogg.mp3"
+                      type="audio/mpeg">
+                  </audio>
+                </div>
+                <div class="track-col-actions">
+                  <label for="like-trk-20" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+                  <span class="track-duration">4:25</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW 3: THƯ VIỆN (LIBRARY VIEW) ==================== -->
+        <section class="view-section" id="view-library">
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fa-solid fa-lines-leaning"></i>
+              Thư viện âm nhạc của bạn
+            </h2>
+            <label for="modal-create-playlist-toggle" class="btn-modal-submit"
+              style="cursor: pointer; text-decoration: none;">
+              <i class="fa-solid fa-plus"></i> Tạo Playlist Mới
+            </label>
+          </div>
+
+          <div class="cards-grid">
+            <label for="tab-favorites" class="media-card"
+              style="background: linear-gradient(135deg, #831843, #1e1b4b);">
+              <div class="card-cover-wrapper"
+                style="display: flex; align-items: center; justify-content: center; background: rgba(236,72,153,0.2);">
+                <i class="fa-solid fa-heart" style="font-size: 48px; color: #ec4899;"></i>
+              </div>
+              <div class="card-title">Bài hát đã thích</div>
+              <div class="card-subtitle">8 bài hát tuyển chọn đã lưu</div>
+            </label>
+
+            <label for="tab-detail-playlist" class="media-card">
+              <div class="card-cover-wrapper">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80"
+                  class="card-cover-img" alt="Giai điệu yêu thích">
+              </div>
+              <div class="card-title">Giai điệu yêu thích</div>
+              <div class="card-subtitle">Playlist cá nhân • 6 bài</div>
+            </label>
+
+            <label for="tab-detail-playlist" class="media-card">
+              <div class="card-cover-wrapper">
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80"
+                  class="card-cover-img" alt="Deep Focus">
+              </div>
+              <div class="card-title">Deep Focus & Lo-Fi</div>
+              <div class="card-subtitle">Playlist cá nhân • 12 bài</div>
+            </label>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW 4: BÀI HÁT YÊU THÍCH (FAVORITES VIEW) ==================== -->
+        <section class="view-section" id="view-favorites">
+          <div class="detail-header-card"
+            style="background: linear-gradient(180deg, rgba(236, 72, 153, 0.3) 0%, rgba(18, 18, 30, 0.6) 100%);">
+            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80"
+              class="detail-cover" alt="Liked Songs">
+            <div class="detail-meta">
+              <span class="detail-type" style="color: #f472b6;">BỘ SƯU TẬP YÊU THÍCH</span>
+              <h1 class="detail-title">Bài hát đã thích</h1>
+              <p class="detail-desc">Toàn bộ những siêu phẩm âm nhạc bạn đã thả tim trên VYBE, sẵn sàng phát mọi lúc.
+              </p>
+              <div class="detail-stats">
+                <span>Lossless 24-bit / 96kHz</span>
+                <span>•</span>
+                <span>Đồng bộ tài khoản VIP</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tracklist-container">
+            <div class="track-row">
+              <div class="track-col-index">1</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Blinding Lights <span class="song-badge badge-hit">HOT</span></div>
+                  <div class="track-artist">The Weeknd Tribute</div>
+                </div>
+              </div>
+              <div class="track-col-album">After Hours</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <span class="heart-btn" style="color: #ec4899;"><i class="fa-solid fa-heart"></i></span>
+                <span class="track-duration">6:12</span>
+              </div>
+            </div>
+
+            <div class="track-row">
+              <div class="track-col-index">2</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Nơi Này Có Anh (Lo-Fi Piano) <span class="song-badge badge-vpop">V-POP</span>
+                  </div>
+                  <div class="track-artist">Sơn Tùng M-TP Tribute</div>
+                </div>
+              </div>
+              <div class="track-col-album">M-TP Sunset</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <span class="heart-btn" style="color: #ec4899;"><i class="fa-solid fa-heart"></i></span>
+                <span class="track-duration">7:03</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW 5: LỊCH SỬ NGHE NHẠC (HISTORY VIEW) ==================== -->
+        <section class="view-section" id="view-history">
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+              Lịch sử nghe gần đây
+            </h2>
+          </div>
+
+          <div class="tracklist-container">
+            <div class="track-row">
+              <div class="track-col-index">1</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Blinding Lights</div>
+                  <div class="track-artist">The Weeknd Tribute</div>
+                </div>
+              </div>
+              <div class="track-col-album">Vừa nghe xong</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <span class="track-duration">6:12</span>
+              </div>
+            </div>
+
+            <div class="track-row">
+              <div class="track-col-index">2</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">See Tình (Dance Remix)</div>
+                  <div class="track-artist">Hoàng Thùy Linh Tribute</div>
+                </div>
+              </div>
+              <div class="track-col-album">10 phút trước</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <span class="track-duration">6:35</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW 6: TÀI KHOẢN NGƯỜI DÙNG VIP (PROFILE VIEW - PURE CSS) ==================== -->
+        <section class="view-section" id="view-profile">
+          <div class="profile-hero">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80"
+              class="profile-avatar-large" alt="User Avatar">
+            <div class="profile-info">
+              <div class="profile-badge-row">
+                <span class="badge-vip"><i class="fa-solid fa-crown"></i> VYBE VIP PREMIER</span>
+                <span class="badge-lossless"><i class="fa-solid fa-bolt"></i> Hi-Res Lossless 24-bit</span>
+              </div>
+              <h1 class="profile-name-title">Nguyễn Nhật Tân</h1>
+              <p class="profile-email">nguyennhattan@vybe.music.io • Thành viên từ 2025</p>
+              <div style="display: flex; gap: 12px; margin-top: 14px;">
+                <label for="modal-auth-toggle" class="btn-modal-submit"
+                  style="cursor: pointer; padding: 8px 20px; font-size: 13px;">
+                  <i class="fa-solid fa-user-pen"></i> Quản lý tài khoản
+                </label>
+                <label for="modal-auth-toggle" class="btn-modal-cancel"
+                  style="cursor: pointer; padding: 8px 20px; font-size: 13px; color: #ef4444; border-color: rgba(239,68,68,0.3);">
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thống kê tài khoản -->
+          <div class="profile-stats-grid">
+            <div class="profile-stat-box">
+              <div class="stat-icon" style="background: rgba(236, 72, 153, 0.15); color: #ec4899;">
+                <i class="fa-solid fa-heart"></i>
+              </div>
+              <div>
+                <div class="stat-value">148</div>
+                <div class="stat-label">Bài hát yêu thích</div>
+              </div>
+            </div>
+
+            <div class="profile-stat-box">
+              <div class="stat-icon" style="background: rgba(139, 92, 246, 0.15); color: #c084fc;">
+                <i class="fa-solid fa-compact-disc"></i>
+              </div>
+              <div>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Playlists cá nhân</div>
+              </div>
+            </div>
+
+            <div class="profile-stat-box">
+              <div class="stat-icon" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4;">
+                <i class="fa-solid fa-clock"></i>
+              </div>
+              <div>
+                <div class="stat-value">385 Giờ</div>
+                <div class="stat-label">Thời gian thưởng thức</div>
+              </div>
+            </div>
+
+            <div class="profile-stat-box">
+              <div class="stat-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <div>
+                <div class="stat-value">Lossless</div>
+                <div class="stat-label">Chất lượng âm thanh đỉnh cao</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cài đặt & Tùy chọn âm thanh -->
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fa-solid fa-sliders"></i>
+              Tùy chọn âm thanh & Trải nghiệm
+            </h2>
+          </div>
+
+          <div class="tracklist-container" style="padding: 16px 24px;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border-subtle);">
+              <div>
+                <div style="font-weight: 700; font-size: 15px;">Chất lượng truyền trực tuyến (Audio Quality)</div>
+                <div style="font-size: 13px; color: var(--text-secondary);">Phát ở định dạng Lossless FLAC 24-bit /
+                  96kHz không nén</div>
+              </div>
+              <span class="badge-vip" style="background: #10b981; font-size: 12px;">ĐANG BẬT</span>
+            </div>
+
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border-subtle);">
+              <div>
+                <div style="font-weight: 700; font-size: 15px;">Âm thanh vòm Dolby Atmos & Spatial Audio</div>
+                <div style="font-size: 13px; color: var(--text-secondary);">Tái hiện không gian âm nhạc đa chiều 360 độ
+                </div>
+              </div>
+              <span class="badge-vip" style="background: var(--accent-gradient); font-size: 12px;">ĐÃ KÍCH HOẠT</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 0;">
+              <div>
+                <div style="font-weight: 700; font-size: 15px;">Hiệu ứng chuyển bài êm dịu (Crossfade)</div>
+                <div style="font-size: 13px; color: var(--text-secondary);">Hòa quyện âm thanh giữa các bài hát không
+                  ngắt quãng (4 giây)</div>
+              </div>
+              <span class="badge-vip" style="background: #6366f1; font-size: 12px;">MẶC ĐỊNH</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW 7: CHI TIẾT ALBUM (ALBUM DETAIL VIEW) ==================== -->
+        <section class="view-section" id="view-detail-album">
+          <div class="detail-header-card">
+            <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+              class="detail-cover" alt="Neon Horizons">
+            <div class="detail-meta">
+              <span class="detail-type">ALBUM TOÀN CẦU</span>
+              <h1 class="detail-title">Neon Horizons (After Hours)</h1>
+              <p class="detail-desc">Tuyển tập những siêu phẩm âm nhạc Synthwave và Electro Pop làm say đắm hàng triệu
+                con tim.</p>
+              <div class="detail-stats">
+                <span>The Weeknd & Kira</span>
+                <span>•</span>
+                <span>Năm 2026</span>
+                <span>•</span>
+                <span>Lossless Hi-Res</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tracklist-container">
+            <div class="track-row">
+              <div class="track-col-index">1</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Blinding Lights</div>
+                  <div class="track-artist">The Weeknd Tribute</div>
+                </div>
+              </div>
+              <div class="track-col-album">After Hours Deluxe</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-1" class="heart-btn"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">6:12</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW 8: CHI TIẾT PLAYLIST ==================== -->
+        <section class="view-section" id="view-detail-playlist">
+          <div class="detail-header-card">
+            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80"
+              class="detail-cover" alt="Playlist">
+            <div class="detail-meta">
+              <span class="detail-type">PLAYLIST CHỌN LỌC</span>
+              <h1 class="detail-title">Global Top 50 Hits 2026</h1>
+              <p class="detail-desc">Tuyển tập bài hát được nghe nhiều nhất toàn cầu và các bản hit V-Pop đỉnh cao.</p>
+              <div class="detail-stats">
+                <span>Biên tập bởi VYBE</span>
+                <span>•</span>
+                <span>Lossless HD</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tracklist-container">
+            <div class="track-row">
+              <div class="track-col-index">1</div>
+              <div class="track-col-title">
+                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+                  class="track-thumb" alt="Cover">
+                <div class="track-names">
+                  <div class="track-name">Blinding Lights</div>
+                  <div class="track-artist">The Weeknd Tribute</div>
+                </div>
+              </div>
+              <div class="track-col-album">After Hours</div>
+              <div class="track-col-player">
+                <audio controls preload="none">
+                  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="track-col-actions">
+                <label for="like-trk-1" class="heart-btn"><i class="fa-solid fa-heart"></i></label>
+                <span class="track-duration">6:12</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ==================== GIAO DIỆN LỜI BÀI HÁT (APPLE MUSIC SYNCED LYRICS - PURE CSS) ==================== -->
+  <div class="lyrics-overlay">
+    <div class="lyrics-backdrop"></div>
+    <div class="lyrics-header">
+      <div class="lyrics-song-meta">
+        <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+          class="lyrics-thumb" alt="Thumb">
+        <div>
+          <h3 style="font-size: 16px; font-weight: 700;">Blinding Lights (After Hours)</h3>
+          <p style="font-size: 13px; color: var(--text-secondary);">The Weeknd Tribute</p>
+        </div>
+      </div>
+      <label for="toggle-lyrics" class="btn-close-lyrics" title="Đóng lời bài hát">
+        <i class="fa-solid fa-xmark"></i>
+      </label>
+    </div>
+
+    <div class="lyrics-content-area">
+      <div class="lyrics-left-art">
+        <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+          class="lyrics-large-cover" alt="Cover">
+        <!-- Pure CSS Neon Equalizer -->
+        <div class="css-visualizer" style="height: 38px;">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="lyrics-scroll-container">
+        <div class="lyric-line">♪ [Intro Synthwave điện tử dồn dập & ánh sáng neon tím] ♪</div>
+        <div class="lyric-line">I've been on my own for long enough</div>
+        <div class="lyric-line">Maybe you can show me how to love, maybe</div>
+        <div class="lyric-line active">I'm going through withdrawals, you don't even have to do too much</div>
+        <div class="lyric-line">You can turn me on with just a touch, baby</div>
+        <div class="lyric-line">I look around and Sin City's cold and empty</div>
+        <div class="lyric-line">No one's around to judge me, I can't see clearly when you're gone</div>
+        <div class="lyric-line active">I said, ooh, I'm blinded by the lights</div>
+        <div class="lyric-line">No, I can't sleep until I feel your touch</div>
+        <div class="lyric-line">♪ [Đoạn drop synth bùng nổ năng lượng đỉnh cao của VYBE] ♪</div>
+        <div class="lyric-line">Keep the rhythm alive, feel the vybe forever</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DANH SÁCH CHỜ (QUEUE DRAWER - PURE CSS) ==================== -->
+  <aside class="queue-drawer">
+    <div class="queue-header">
+      <h3 class="queue-title"><i class="fa-solid fa-list-ul"></i> Danh sách chờ</h3>
+      <label for="toggle-queue" class="btn-modal-close"><i class="fa-solid fa-xmark"></i></label>
+    </div>
+    <div class="queue-list">
+      <div class="queue-item active">
+        <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+          class="queue-item-thumb" alt="Thumb">
+        <div class="queue-item-info">
+          <div class="queue-item-title">Blinding Lights</div>
+          <div class="queue-item-artist">The Weeknd Tribute</div>
+        </div>
+        <span style="color: var(--primary-bright); font-size: 11px; font-weight: 700;">ĐANG PHÁT</span>
+      </div>
+
+      <div class="queue-item">
+        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80"
+          class="queue-item-thumb" alt="Thumb">
+        <div class="queue-item-info">
+          <div class="queue-item-title">See Tình (Dance Remix)</div>
+          <div class="queue-item-artist">Hoàng Thùy Linh Tribute</div>
+        </div>
+        <span style="color: var(--text-muted); font-size: 11px;">TIẾP THEO</span>
+      </div>
+
+      <div class="queue-item">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80"
+          class="queue-item-thumb" alt="Thumb">
+        <div class="queue-item-info">
+          <div class="queue-item-title">Nơi Này Có Anh (Lo-Fi Piano)</div>
+          <div class="queue-item-artist">Sơn Tùng M-TP Tribute</div>
+        </div>
+        <span style="color: var(--text-muted); font-size: 11px;">TIẾP THEO</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== THANH PHÁT NHẠC CỐ ĐỊNH PHÍA DƯỚI (BOTTOM PLAYER - PURE HTML & CSS) ==================== -->
+  <footer class="player-bar">
+    <!-- Cột trái: Thông tin bài hát & Đĩa than Vinyl xoay -->
+    <div class="player-left">
+      <div class="player-thumb-wrapper">
+        <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80"
+          class="player-thumb" alt="Album Cover">
+      </div>
+      <div class="player-track-info">
+        <span class="player-title">Blinding Lights</span>
+        <span class="player-artist">The Weeknd Tribute</span>
+      </div>
+      <label for="like-hero" class="heart-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></label>
+
+      <!-- Mini Visualizer thuần CSS -->
+      <div class="mini-css-visualizer" title="Sóng nhạc neon">
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <!-- Cột giữa: Trình phát nhạc thực tế và các nút tính năng -->
+    <div class="player-center">
+      <div class="player-center-controls">
+        <!-- Nút Shuffle ngẫu nhiên -->
+        <label for="toggle-shuffle" class="btn-control" title="Phát ngẫu nhiên (Shuffle)">
+          <i class="fa-solid fa-shuffle"></i>
+        </label>
+
+        <!-- Trình phát Audio HTML5 tích hợp đầy đủ nút Play, Pause, Tua nhạc, Chỉnh âm lượng -->
+        <audio controls class="player-native-audio" preload="metadata">
+          <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
+
+        <!-- Nút Lặp lại (Repeat) -->
+        <label for="toggle-repeat" class="btn-control" title="Lặp lại (Repeat)">
+          <i class="fa-solid fa-repeat"></i>
+        </label>
+      </div>
+    </div>
+
+    <!-- Cột phải: Mở Lời bài hát & Mở Danh sách chờ -->
+    <div class="player-right">
+      <label for="toggle-lyrics" class="btn-control" title="Lời bài hát (Lyrics)">
+        <i class="fa-solid fa-microphone-lines"></i>
+      </label>
+      <label for="toggle-queue" class="btn-control" title="Danh sách chờ (Queue)">
+        <i class="fa-solid fa-list-ol"></i>
+      </label>
+    </div>
+  </footer>
+
+  <!-- ==================== MODAL: ĐĂNG NHẬP / ĐĂNG KÝ TÀI KHOẢN (PURE CSS) ==================== -->
+  <div class="modal-backdrop" id="modal-auth">
+    <!-- Radio chuyển tab Đăng nhập / Đăng ký trong Modal -->
+    <input type="radio" name="auth-tab" id="auth-tab-login" class="overlay-checkbox" checked>
+    <input type="radio" name="auth-tab" id="auth-tab-register" class="overlay-checkbox">
+
+    <div class="auth-modal-card">
+      <div class="modal-header" style="margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="logo-icon-wrapper" style="width: 32px; height: 32px;">
+            <i class="fa-solid fa-bolt" style="font-size: 16px;"></i>
+          </div>
+          <span style="font-weight: 800; font-size: 20px; letter-spacing: 1px;">VYBE ID</span>
+        </div>
+        <label for="modal-auth-toggle" class="btn-modal-close"><i class="fa-solid fa-xmark"></i></label>
+      </div>
+
+      <!-- Navigation Tabs Đăng nhập / Đăng ký -->
+      <div class="auth-tabs-nav">
+        <label for="auth-tab-login" class="auth-tab-label">Đăng Nhập</label>
+        <label for="auth-tab-register" class="auth-tab-label">Tạo Tài Khoản</label>
+      </div>
+
+      <!-- Đăng nhập bằng Mạng xã hội -->
+      <div class="social-auth-grid">
+        <button type="button" class="social-auth-btn">
+          <i class="fa-brands fa-google" style="color: #ea4335;"></i>
+          <span>Google</span>
+        </button>
+        <button type="button" class="social-auth-btn">
+          <i class="fa-brands fa-apple"></i>
+          <span>Apple ID</span>
+        </button>
+      </div>
+
+      <div class="auth-divider">hoặc tiếp tục với email</div>
+
+      <!-- PANEL 1: FORM ĐĂNG NHẬP -->
+      <div class="auth-form-panel" id="auth-panel-login">
+        <form action="#" onsubmit="return false;">
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email hoặc Tên đăng nhập</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="email" class="form-input" id="login-email" placeholder="tenban@gmail.com"
+                value="nguyennhattan@vybe.music.io" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="login-password">Mật khẩu</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" class="form-input" id="login-password" placeholder="Nhập mật khẩu..."
+                value="••••••••••••" required>
+            </div>
+          </div>
+
+          <div class="form-row-between">
+            <label class="form-checkbox-label">
+              <input type="checkbox" checked style="accent-color: var(--primary);">
+              <span>Ghi nhớ đăng nhập</span>
+            </label>
+            <a href="#" class="forgot-link">Quên mật khẩu?</a>
+          </div>
+
+          <label for="modal-auth-toggle" class="btn-auth-full">
+            Đăng Nhập Ngay
+          </label>
+        </form>
+      </div>
+
+      <!-- PANEL 2: FORM ĐĂNG KÝ -->
+      <div class="auth-form-panel" id="auth-panel-register">
+        <form action="#" onsubmit="return false;">
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Họ và Tên</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-user"></i>
+              <input type="text" class="form-input" id="reg-name" placeholder="Ví dụ: Nguyễn Nhật Tân" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Địa chỉ Email</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="email" class="form-input" id="reg-email" placeholder="tenban@gmail.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-pass">Mật khẩu mới</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" class="form-input" id="reg-pass" placeholder="Tối thiểu 8 ký tự..." required>
+            </div>
+          </div>
+
+          <div class="form-row-between">
+            <label class="form-checkbox-label">
+              <input type="checkbox" checked style="accent-color: var(--primary);">
+              <span>Tôi đồng ý với Điều khoản dịch vụ VYBE</span>
+            </label>
+          </div>
+
+          <label for="modal-auth-toggle" class="btn-auth-full">
+            Tạo Tài Khoản VIP Miễn Phí
+          </label>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: TẠO PLAYLIST MỚI (PURE CSS) ==================== -->
+  <div class="modal-backdrop" id="modal-playlist">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Tạo Playlist Mới</h3>
+        <label for="modal-create-playlist-toggle" class="btn-modal-close"><i class="fa-solid fa-xmark"></i></label>
+      </div>
+      <form action="#" onsubmit="return false;">
+        <div class="form-group">
+          <label class="form-label" for="playlist-name">Tên Playlist</label>
+          <input type="text" class="form-input" id="playlist-name" placeholder="Ví dụ: Những đêm mưa không ngủ..."
+            required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="playlist-desc">Mô tả (tùy chọn)</label>
+          <textarea class="form-textarea" id="playlist-desc"
+            placeholder="Cảm xúc hoặc phong cách của danh sách phát này..."></textarea>
+        </div>
+        <div class="modal-actions">
+          <label for="modal-create-playlist-toggle" class="btn-modal-cancel">Hủy</label>
+          <label for="modal-create-playlist-toggle" class="btn-modal-submit">Lưu Playlist</label>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+
+</html>
