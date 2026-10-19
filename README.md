@@ -8,17 +8,6 @@
 
 ---
 
-## BẢNG ĐỐI CHIẾU TIÊU CHÍ CHẤM ĐIỂM (THANG ĐIỂM 10)
-
-| Tiêu chí | Nội dung chi tiết | Điểm tối đa | Mức độ đáp ứng trong dự án VYBE |
-| :--- | :--- | :---: | :--- |
-| **1. Quy chuẩn Nộp bài & Git** | • Thư mục/Repository đặt đúng cú pháp `NguyenNhatTan_25CT113_125001661`.<br>• Commit rõ ràng, mã nguồn sạch sẽ, không file rác, chạy ngay trên trình duyệt mà không cần cài đặt môi trường. | **1.0 điểm** | **Đạt 100%:** Mã nguồn tinh giản, thư mục chuẩn quy cách, chạy trực tiếp file `index.html`. |
-| **2. Chuẩn Semantic HTML5** | • Cấu trúc web chuẩn ngữ nghĩa: `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>`.<br>• Không lạm dụng thẻ `<div>` vô nghĩa.<br>• Thẻ `<audio>` Lossless native chuẩn HTML5. | **2.0 điểm** | **Đạt 100%:** 100% cấu trúc phân tầng rõ ràng bằng các thẻ ngữ nghĩa chuẩn SEO và Accessibility. |
-| **3. Kỹ thuật CSS & Variables** | • Khai báo CSS Variables đầy đủ: bảng màu Neon Violet, Dark Surface, Glassmorphism, Radii, Shadows.<br>• Phối hợp mượt mà Flexbox & CSS Grid.<br>• UI/UX đẳng cấp như Spotify + Apple Music. | **2.5 điểm** | **Đạt 100%:** Thiết kế hệ thống Design System hoàn chỉnh, hỗ trợ Responsive Desktop, Tablet và Mobile. |
-| **4. Hiệu ứng & Animation** | • Tích hợp Animation mở đầu khi load trang (Pure CSS Preloader).<br>• Tích hợp thư viện Font Awesome 6, Animate.css, hiệu ứng đĩa xoay Vinyl, Equalizer âm thanh, sóng nhạc. | **1.5 điểm** | **Đạt 100%:** Hiệu ứng chuyển động 60fps mượt mà không dùng JavaScript. |
-| **5. Tính năng Tương tác Pure CSS** | • SPA Routing không cần reload bằng CSS Radio.<br>• Bộ lọc thể loại âm nhạc Real-time (Pill Filters).<br>• Modal Đăng nhập/Đăng ký và Quản lý VIP Profile.<br>• Apple Music Lyric View toàn màn hình. | **3.0 điểm** | **Đạt 100%:** Đột phá kỹ thuật điều khiển toàn bộ tương tác phức tạp bằng Pure CSS Selector. |
-
----
 
 ## 1. Yêu cầu ban đầu (System / Initial Prompt)
 
